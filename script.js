@@ -1,73 +1,80 @@
 async function loadData() {
-  const res = await fetch("/api/cancelBids");
-  const data = await res.json();
+  try {
+    const res = await fetch("/api/cancelBids");
+    const data = await res.json();
 
-  // ===== STATS =====
-  document.getElementById("totalBids").innerText = data.length;
+    // ✅ HARD GUARD: ensure we have an array
+    if (!Array.isArray(data)) {
+      console.error("Invalid API response:", data);
+      return;
+    }
 
-  document.getElementById("uniqueWallets").innerText =
-    new Set(data.map(d => d.wallet)).size;
+    // ===== STATS =====
+    const totalBids = data.length;
+    document.getElementById("totalBids").innerText = totalBids;
 
-  const totalAmount = data.reduce((sum, d) => {
-    return sum + (Number(d.amount) || 0);
-  }, 0);
+    const uniqueWallets = new Set(data.map(d => d.wallet)).size;
+    document.getElementById("uniqueWallets").innerText = uniqueWallets;
 
-  document.getElementById("totalAmount").innerText =
-    `$${totalAmount.toLocaleString()}`;
+    // Total cancelled amount
+    const totalAmount = data.reduce((sum, d) => {
+      return sum + (Number(d.amount) || 0);
+    }, 0);
 
-  // ===== TABLE / MOBILE RENDER =====
-  const rows = document.getElementById("rows");
-  rows.innerHTML = "";
+    document.getElementById("totalAmount").innerText =
+      `$${totalAmount.toLocaleString(undefined, { maximumFractionDigits: 3 })}`;
 
-  const isMobile = window.innerWidth <= 700;
+    // ===== TABLE / MOBILE CARDS =====
+    const rows = document.getElementById("rows");
+    rows.innerHTML = "";
 
-  data.forEach(d => {
-    const time = new Date(d.time * 1000).toLocaleString();
+    const isMobile = window.innerWidth <= 700;
 
-    // 📱 MOBILE CARD VIEW
-    if (isMobile) {
-      rows.innerHTML += `
-        <tr class="mobile-row">
-          <td colspan="5">
-            <div class="mobile-card">
-              <div class="mobile-wallet">${d.wallet}</div>
+    data.forEach(d => {
+      if (isMobile) {
+        rows.innerHTML += `
+          <tr class="mobile-row">
+            <td colspan="5">
+              <div class="mobile-card">
+                <div class="mobile-wallet">${d.wallet}</div>
 
-              <div class="mobile-meta">
-                <span class="amount">
-                  ${Number(d.amount).toLocaleString()} ${d.token}
-                </span>
-                <span class="time">${time}</span>
+                <div class="mobile-meta">
+                  <div class="amount">
+  ${Number(d.amount).toLocaleString()}
+  <span class="token">${d.token}</span>
+</div>
+
+                  <div class="time">
+                    ${new Date(d.time * 1000).toLocaleString()}
+                  </div>
+                </div>
+
+                <a href="https://etherscan.io/tx/${d.hash}" target="_blank">
+                  View transaction →
+                </a>
               </div>
+            </td>
+          </tr>
+        `;
+      } else {
+        rows.innerHTML += `
+          <tr>
+            <td class="wallet">${d.wallet}</td>
+            <td class="amount">${Number(d.amount).toLocaleString()}</td>
+            <td>${d.token}</td>
+            <td>${new Date(d.time * 1000).toLocaleString()}</td>
+            <td>
+              <a href="https://etherscan.io/tx/${d.hash}" target="_blank">view</a>
+            </td>
+          </tr>
+        `;
+      }
+    });
 
-              <a href="https://etherscan.io/tx/${d.hash}" target="_blank">
-                View transaction →
-              </a>
-            </div>
-          </td>
-        </tr>
-      `;
-    }
-
-    // 🖥 DESKTOP TABLE VIEW
-    else {
-      rows.innerHTML += `
-        <tr>
-          <td class="wallet">${d.wallet}</td>
-          <td class="amount">${Number(d.amount).toLocaleString()}</td>
-          <td>${d.token}</td>
-          <td>${time}</td>
-          <td>
-            <a href="https://etherscan.io/tx/${d.hash}" target="_blank">
-              view
-            </a>
-          </td>
-        </tr>
-      `;
-    }
-  });
+  } catch (err) {
+    console.error("Failed to load data:", err);
+  }
 }
 
+// Load once
 loadData();
-
-// Re-render when screen resizes
-window.addEventListener("resize", loadData);
