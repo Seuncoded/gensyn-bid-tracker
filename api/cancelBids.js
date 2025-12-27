@@ -1,18 +1,23 @@
+import axios from "axios";
+
 export default async function handler(req, res) {
-  const API_KEY = process.env.ETHERSCAN_KEY;
-  const CONTRACT = "0x73612914c81a9c072333ea9ea71a9b26a5b9a707";
+  try {
+    const API_KEY = process.env.ETHERSCAN_KEY;
+    const CONTRACT = "0x73612914c81a9c072333ea9ea71a9b26a5b9a707";
 
-  const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${CONTRACT}&sort=desc&apikey=${API_KEY}`;
+    if (!API_KEY) {
+      return res.status(500).json({ error: "Missing ETHERSCAN_KEY" });
+    }
 
-  const response = await fetch(url);
-  const data = await response.json();
+    const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${CONTRACT}&sort=desc&apikey=${API_KEY}`;
 
-  const txs = data.result || [];
+    const response = await axios.get(url);
 
-  // TEMP: log first tx input
-  const cancelTxs = txs.filter(tx =>
-    tx.input && tx.input !== "0x"
-  );
-
-  res.status(200).json(cancelTxs.slice(0, 20));
+    res.status(200).json(response.data.result.slice(0, 5));
+  } catch (err) {
+    res.status(500).json({
+      error: "Server error",
+      message: err.message
+    });
+  }
 }
