@@ -10,8 +10,9 @@ module.exports = async function handler(req, res) {
     }
 
     const url =
-      "https://api.etherscan.io/api" +
-      "?module=account" +
+      "https://api.etherscan.io/v2/api" +
+      "?chainid=1" +
+      "&module=account" +
       "&action=txlist" +
       `&address=${CONTRACT}` +
       "&sort=desc" +
@@ -19,15 +20,7 @@ module.exports = async function handler(req, res) {
 
     const response = await axios.get(url);
 
-    // 🔐 Handle non-JSON (rate limit / auth error)
-    if (typeof response.data !== "object") {
-      return res.status(429).json({
-        error: "Etherscan error",
-        message: response.data
-      });
-    }
-
-    // 🔐 Handle API-level error
+    // Handle API-level errors
     if (response.data.status !== "1") {
       return res.status(400).json({
         error: "Etherscan API error",
