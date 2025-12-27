@@ -5,16 +5,13 @@ async function loadData() {
   const res = await fetch("/api/cancelBids");
   const data = await res.json();
 
+  // ✅ UPDATE STATS (THIS IS WHAT YOU ASKED ABOUT)
   document.getElementById("totalBids").innerText = data.length;
-document.getElementById("uniqueWallets").innerText =
-  new Set(data.map(d => d.wallet)).size;
 
+  document.getElementById("uniqueWallets").innerText =
+    new Set(data.map(d => d.wallet)).size;
 
-  const wallets = new Set(data.map(d => d.wallet));
-
-  document.getElementById("stats").innerText =
-    `Cancelled bids: ${data.length} · Unique wallets: ${wallets.size}`;
-
+  // ✅ POPULATE TABLE
   const rows = document.getElementById("rows");
   rows.innerHTML = "";
 
@@ -34,4 +31,3 @@ document.getElementById("uniqueWallets").innerText =
 }
 
 loadData();
-
