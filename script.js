@@ -5,6 +5,11 @@ async function loadData() {
   const res = await fetch("/api/cancelBids");
   const data = await res.json();
 
+  document.getElementById("totalBids").innerText = data.length;
+document.getElementById("uniqueWallets").innerText =
+  new Set(data.map(d => d.wallet)).size;
+
+
   const wallets = new Set(data.map(d => d.wallet));
 
   document.getElementById("stats").innerText =

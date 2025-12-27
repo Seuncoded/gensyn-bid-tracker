@@ -4,25 +4,83 @@
   <title>Cancel Bid Tracker</title>
   <meta charset="UTF-8" />
   <style>
-    body {
-  background: #0b0f14;
-  color: #e6edf3;
-  font-family: Inter, system-ui, sans-serif;
+   * {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(
+    circle at top,
+    #1a130d 0%,
+    var(--bg-main) 60%
+  );
+  color: var(--text-primary);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.2px;
 }
 
 .container {
   max-width: 1100px;
-  margin: 40px auto;
+  margin: 60px auto;
+  padding: 0 20px;
 }
 
-h1 {
-  font-size: 28px;
-  margin-bottom: 8px;
+/* Header */
+.header {
+  margin-bottom: 32px;
 }
 
+.header h1 {
+  font-size: 34px;
+  font-weight: 500;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Stats */
 .stats {
-  color: #8b949e;
-  margin-bottom: 20px;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  flex: 1;
+  background: linear-gradient(
+    180deg,
+    var(--bg-surface),
+    #120e0b
+  );
+  border: 1px solid var(--border-subtle);
+  padding: 18px 20px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  margin-top: 6px;
+  display: block;
+  font-size: 28px;
+  color: var(--accent-gold);
+}
+
+/* Table */
+.table-wrap {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
 }
 
 table {
@@ -30,27 +88,45 @@ table {
   border-collapse: collapse;
 }
 
+thead {
+  background: #120e0b;
+}
+
 th {
   text-align: left;
-  font-size: 13px;
-  color: #8b949e;
-  border-bottom: 1px solid #21262d;
-  padding: 10px;
+  padding: 14px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 td {
-  padding: 12px 10px;
-  border-bottom: 1px solid #161b22;
+  padding: 14px 16px;
   font-size: 14px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 tr:hover {
-  background: #161b22;
+  background: var(--bg-hover);
 }
 
+/* Wallet monospace */
+td:first-child {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+
+/* Links */
 a {
-  color: #58a6ff;
+  color: var(--link);
   text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
   </style>
@@ -58,22 +134,42 @@ a {
 <body>
 
  <div class="container">
-  <h1>Cancel Bid Tracker</h1>
-  <p id="stats" class="stats">Loading…</p>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Wallet</th>
-        <th>Amount</th>
-        <th>Token</th>
-        <th>Time</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody id="rows"></tbody>
-  </table>
+  <header class="header">
+    <h1>Cancel Bid Tracker</h1>
+    <p class="subtitle">
+      On-chain visibility into cancelled bids
+    </p>
+  </header>
+
+  <section class="stats">
+    <div class="stat-card">
+      <span class="stat-label">Cancelled bids</span>
+      <span class="stat-value" id="totalBids">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Unique wallets</span>
+      <span class="stat-value" id="uniqueWallets">—</span>
+    </div>
+  </section>
+
+  <section class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Wallet</th>
+          <th>Amount</th>
+          <th>Token</th>
+          <th>Time</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+
 </div>
+
 
 
   <script src="script.js"></script>
