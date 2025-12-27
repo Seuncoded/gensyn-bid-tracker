@@ -154,6 +154,20 @@
         display: none;
       }
     }
+
+    .stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+@media (max-width: 900px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
   </style>
 </head>
 
@@ -167,17 +181,23 @@
       </p>
     </header>
 
-    <section class="stats">
-      <div class="stat-card">
-        <span class="stat-label">Cancelled Bids</span>
-        <span class="stat-value" id="totalBids">—</span>
-      </div>
+   <section class="stats">
+  <div class="stat-card">
+    <span class="stat-label">Cancelled Bids</span>
+    <span class="stat-value" id="totalBids">—</span>
+  </div>
 
-      <div class="stat-card">
-        <span class="stat-label">Unique Wallets</span>
-        <span class="stat-value" id="uniqueWallets">—</span>
-      </div>
-    </section>
+  <div class="stat-card">
+    <span class="stat-label">Unique Wallets</span>
+    <span class="stat-value" id="uniqueWallets">—</span>
+  </div>
+
+  <div class="stat-card">
+    <span class="stat-label">Total Cancelled Amount</span>
+    <span class="stat-value" id="totalAmount">—</span>
+  </div>
+</section>
+
 
     <section class="table-panel">
       <table>

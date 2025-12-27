@@ -11,6 +11,15 @@ async function loadData() {
   document.getElementById("uniqueWallets").innerText =
     new Set(data.map(d => d.wallet)).size;
 
+    // ✅ Total cancelled amount (USDC + USDT)
+const totalAmount = data.reduce((sum, d) => {
+  return sum + (Number(d.amount) || 0);
+}, 0);
+
+document.getElementById("totalAmount").innerText =
+  `$${totalAmount.toLocaleString()}`;
+
+
   // ✅ POPULATE TABLE
   const rows = document.getElementById("rows");
   rows.innerHTML = "";
