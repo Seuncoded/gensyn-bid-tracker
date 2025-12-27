@@ -5,39 +5,76 @@
   <meta charset="UTF-8" />
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #0d1117;
-      color: #fff;
-      padding: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #333;
-      padding: 8px;
-      font-size: 14px;
-    }
-    a { color: #58a6ff; }
+  background: #0b0f14;
+  color: #e6edf3;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.stats {
+  color: #8b949e;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  font-size: 13px;
+  color: #8b949e;
+  border-bottom: 1px solid #21262d;
+  padding: 10px;
+}
+
+td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #161b22;
+  font-size: 14px;
+}
+
+tr:hover {
+  background: #161b22;
+}
+
+a {
+  color: #58a6ff;
+  text-decoration: none;
+}
+
   </style>
 </head>
 <body>
 
-  <h2>Cancel Bid Tracker</h2>
-  <p id="stats">Loading...</p>
+ <div class="container">
+  <h1>Cancel Bid Tracker</h1>
+  <p id="stats" class="stats">Loading…</p>
 
   <table>
     <thead>
       <tr>
         <th>Wallet</th>
+        <th>Amount</th>
+        <th>Token</th>
         <th>Time</th>
-        <th>Tx</th>
+        <th></th>
       </tr>
     </thead>
     <tbody id="rows"></tbody>
   </table>
+</div>
+
 
   <script src="script.js"></script>
 </body>
