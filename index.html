@@ -379,6 +379,65 @@
   }
 }
 
+/* ===== Centered Header ===== */
+.header.centered {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+/* ===== Title Styling ===== */
+.title {
+  margin: 0;
+  line-height: 1.1;
+}
+
+.title .brand {
+  display: block;
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+
+  background: linear-gradient(180deg, #f6dda0, #caa24e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 18px rgba(214, 179, 106, 0.35),
+    0 0 40px rgba(214, 179, 106, 0.15);
+}
+
+.title .rest {
+  display: block;
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.6px;
+}
+
+/* ===== Subtitle ===== */
+.subtitle {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ===== Mobile Refinement ===== */
+@media (max-width: 700px) {
+  .title .brand {
+    font-size: 38px;
+    letter-spacing: 1.2px;
+  }
+
+  .title .rest {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+}
+
 
   </style>
 </head>
@@ -386,15 +445,16 @@
 <body>
   <div class="container">
 
-    <header class="header">
+   <header class="header centered">
   <h1 class="title">
-    <span class="brand">Gensyn</span>
+    <span class="brand">GENSYN</span>
     <span class="rest">Cancel Bid Tracker</span>
   </h1>
   <p class="subtitle">
-    
+    On-chain transparency into cancelled bids on Gensyn
   </p>
 </header>
+
 
 
    <section class="stats">
