@@ -300,6 +300,85 @@
   }
 }
 
+/* ===== Floating Footer Credit ===== */
+.floating-footer {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+
+  background: rgba(20, 12, 8, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  padding: 8px 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.floating-footer a {
+  color: var(--gold);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.floating-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Title Styling ===== */
+.title {
+  font-size: 38px;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: 0.3px;
+}
+
+.title .brand {
+  display: block;
+  font-weight: 600;
+  background: linear-gradient(
+    180deg,
+    #f3d58a,
+    #caa24e
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 0 18px rgba(214, 179, 106, 0.25);
+}
+
+.title .rest {
+  display: block;
+  color: var(--text-main);
+  margin-top: 4px;
+}
+
+/* ===== Mobile Title Refinement ===== */
+@media (max-width: 700px) {
+  .title {
+    font-size: 30px;
+  }
+
+  .title .brand {
+    font-size: 32px;
+  }
+
+  .title .rest {
+    font-size: 22px;
+    color: var(--text-muted);
+  }
+}
+
 
   </style>
 </head>
@@ -308,11 +387,15 @@
   <div class="container">
 
     <header class="header">
-      <h1>Gensyn Cancel Bid Tracker</h1>
-      <p class="subtitle">
-        On-chain transparency into cancelled bids on Gensyn
-      </p>
-    </header>
+  <h1 class="title">
+    <span class="brand">Gensyn</span>
+    <span class="rest">Cancel Bid Tracker</span>
+  </h1>
+  <p class="subtitle">
+    
+  </p>
+</header>
+
 
    <section class="stats">
   <div class="stat-card">
@@ -350,5 +433,13 @@
   </div>
 
   <script src="script.js"></script>
+
+  <footer class="floating-footer">
+  Built by
+  <a href="https://x.com/seuncoded" target="_blank" rel="noopener">
+    @seuncoded
+  </a>
+</footer>
+
 </body>
 </html>
